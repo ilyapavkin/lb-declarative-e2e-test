@@ -40,8 +40,7 @@ class Request {
 
     // builder
     static async make(app, definition) {
-        const r = new Request(app, definition);
-        await r.build(app, definition); 
+        const r = await (new Request(app, definition)).build();
         return r;
     }
 
@@ -138,8 +137,8 @@ class Request {
 
             }, Promise.resolve());
         }
-
-        return await Request.processRequestDefinition(app, definition, config);
+        const r = Request.processRequestDefinition(app, definition, config);
+        return r;
     }
 
 

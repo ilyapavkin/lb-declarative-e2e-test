@@ -1,12 +1,14 @@
-'use strict';
-
-const debug = require('debug')('lb-declarative-e2e-test'),
-    TestGen = require('declarative-test-structure-generator'),
-    Request = require('./Request'),
+import Debug from 'debug';
+import TestGen from 'declarative-test-structure-generator';
+// import Request from './Request';
+// import TestConfig from './TestConfig';
+const Request = require('./Request'),
     TestConfig = require('./TestConfig');
 
-class TestRunner {
 
+const debug = Debug('lb-declarative-e2e-test');
+
+class TestRunner {
     static run(app, config, testSuiteDefinition) {
         if (testSuiteDefinition === undefined) {
             debug('Running with default config');
@@ -15,14 +17,11 @@ class TestRunner {
         }
 
         config = TestConfig.make(config);
-
         testSuiteDefinition = TestRunner.generateTestSuiteDefinition(app, testSuiteDefinition, config);
-
         TestGen.run(testSuiteDefinition);
     }
 
     static generateTestSuiteDefinition(app, def = {}, config = {}) {
-
         if (Array.isArray(def)) {
             return def.map(t => TestRunner.generateTestDefinition(app, t, config));
         }
@@ -52,14 +51,7 @@ class TestRunner {
     static buildTest(app, def, config) {
         return () => {
             debug(`Test ${def.name}: started`);
-            let res;
-            let done = false;
-            Request.process(app, def, config).then(result => {
-                res = result;
-                done = true;
-            });
-            while(!done);
-            return res; 
+            return Request.process(app, def, config);
         };
     }
 
