@@ -28,7 +28,7 @@ class Request {
         let request;
         request = Request.getSuperTest()(app)[definition.verb](url);
         request = Request.applyHeaders(request, definition.headers);
-        request = Request.applyBody(request, definition.body);
+        request = await Request.applyBody(request, definition.body);
 
         return request;
     }
