@@ -27,8 +27,9 @@ describe('Request', () => {
       expect(req.definition).to.equal('def');
     });
 
-    it('sets request', () => {
+    it('sets request', async () => {
       req = new Request('app', 'def');
+      await req.build();
 
       expect(Request.buildRequest.calledWithExactly('app', 'def')).to.be.true;
       expect(req.request).to.equal('requestStub');

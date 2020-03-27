@@ -6,7 +6,7 @@ const expect = require('chai').expect,
 
 const TestRunner = require('./TestRunner'),
   TestConfig = require('./TestConfig'),
-  Request = require('./Request');
+  Request = require('./Request').default;
 
 describe('TestRunner', () => {
 
